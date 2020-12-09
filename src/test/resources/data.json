@@ -1,0 +1,25 @@
+[
+  {
+    "Departs": "2017-04-21 07:04",
+    "Tickets": [
+      {
+        "Passenger": {
+          "FirstName": "Some name",
+          "LastName": "Some other name"
+        },
+        "Price": 200
+      }
+    ]
+  },
+  {
+    "Departs": "2017-04-21 07:04",
+    "Tickets": [
+      {
+        "Passenger": {
+          "FirstName": "Some other name"
+        },
+        "Price": 400
+      }
+    ]
+  }
+]

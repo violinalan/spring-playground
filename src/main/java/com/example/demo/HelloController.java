@@ -127,4 +127,9 @@ public class HelloController {
 
         return Arrays.asList(flight, flight2);
     }
+
+    @PostMapping("/flights/tickets/total")
+    public int getFlightsTotal(@RequestBody Flight[] flights) {
+        return flights[0].getTickets().get(0).getPrice() + flights[1].getTickets().get(0).getPrice();
+    }
 }
