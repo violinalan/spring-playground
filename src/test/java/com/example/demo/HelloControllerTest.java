@@ -12,6 +12,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.hamcrest.Matchers.is;
+
 @WebMvcTest(HelloController.class)
 public class HelloControllerTest {
 
@@ -76,4 +79,33 @@ public class HelloControllerTest {
                 .andExpect(content().string("Invalid"));
     }
 
+    @Test
+    public void testGetFlight() throws Exception {
+        this.mvc.perform(
+                get("/flights/flight")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.Departs", is("2017-04-21 07:04")))
+                .andExpect(jsonPath("$.Tickets[0].Passenger.FirstName", is("Some name")))
+                .andExpect(jsonPath("$.Tickets[0].Passenger.LastName", is("Some other name")))
+                .andExpect(jsonPath("$.Tickets[0].Price", is(200)));
+    }
+
+    @Test
+    public void testGetListOfFlights() throws Exception {
+        this.mvc.perform(
+                get("/flights")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].Departs", is("2017-04-21 07:04")))
+                .andExpect(jsonPath("$[0].Tickets[0].Passenger.FirstName", is("Some name")))
+                .andExpect(jsonPath("$[0].Tickets[0].Passenger.LastName", is("Some other name")))
+                .andExpect(jsonPath("$[0].Tickets[0].Price", is(200)))
+
+                .andExpect(jsonPath("$[1].Departs", is("2017-04-21 07:04")))
+                .andExpect(jsonPath("$[1].Tickets[0].Passenger.FirstName", is("Some other name")))
+                .andExpect(jsonPath("$[1].Tickets[0].Price", is(400)));
+    }
 }

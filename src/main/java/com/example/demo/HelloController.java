@@ -2,6 +2,8 @@ package com.example.demo;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -88,4 +90,41 @@ public class HelloController {
         else return "Invalid";
     }
 
+    @GetMapping("/flights/flight")
+    public Flight getFlight() {
+        Flight flight = new Flight();
+        flight.setDeparts(new java.util.Date(117, 3, 21));
+        Flight.Ticket ticket = new Flight.Ticket();
+        Flight.Ticket.Person passenger = new Flight.Ticket.Person();
+        passenger.setFirstName("Some name");
+        passenger.setLastName("Some other name");
+        ticket.setPassenger(passenger);
+        ticket.setPrice(200);
+        flight.setTickets(Arrays.asList(ticket));
+        return flight;
+    }
+
+    @GetMapping("/flights")
+    public List<Flight> getFlights() {
+        Flight flight = new Flight();
+        flight.setDeparts(new java.util.Date(117, 3, 21));
+        Flight.Ticket ticket = new Flight.Ticket();
+        Flight.Ticket.Person passenger = new Flight.Ticket.Person();
+        passenger.setFirstName("Some name");
+        passenger.setLastName("Some other name");
+        ticket.setPassenger(passenger);
+        ticket.setPrice(200);
+        flight.setTickets(Arrays.asList(ticket));
+
+        Flight flight2 = new Flight();
+        flight2.setDeparts(new java.util.Date(117, 3, 21));
+        Flight.Ticket ticket2 = new Flight.Ticket();
+        Flight.Ticket.Person passenger2 = new Flight.Ticket.Person();
+        passenger2.setFirstName("Some other name");
+        ticket2.setPassenger(passenger2);
+        ticket2.setPrice(400);
+        flight2.setTickets(Arrays.asList(ticket2));
+
+        return Arrays.asList(flight, flight2);
+    }
 }
