@@ -2,6 +2,8 @@ package com.example.demo;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 public class HelloController {
 
@@ -62,6 +64,28 @@ public class HelloController {
         int heightNum = Integer.parseInt(height);
 
         return "The volume of a " + length + "x" + width + "x" + height + " rectangle is " + Integer.toString(lengthNum*widthNum*heightNum);
+    }
+
+    @PostMapping("/math/area")
+    public String area(@RequestParam String type, @RequestParam Map<String, String> body) {
+        if(type.equals("circle")) {
+            if(!body.containsKey("radius")) {
+                return "Invalid";
+            } else {
+                int radius = Integer.parseInt(body.get("radius"));
+                return "Area of a circle with a radius of " + radius + " is " + Double.toString(3.14159 * radius * radius);
+            }
+        }
+        else if(type.equals("rectangle")) {
+            if(!body.containsKey("width") || !body.containsKey("height")) {
+                return "Invalid";
+            } else {
+                int width = Integer.parseInt(body.get("width"));
+                int height = Integer.parseInt(body.get("height"));
+                return "Area of a " + width + "x" + height + " rectangle is " + Integer.toString(width * height);
+            }
+        }
+        else return "Invalid";
     }
 
 }
