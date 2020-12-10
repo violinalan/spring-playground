@@ -3,6 +3,7 @@ package com.example.demo;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.text.html.Option;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -41,5 +42,15 @@ public class LessonsController {
         lessonToUpdate.setDeliveredOn(lesson.getDeliveredOn());
         this.repository.save(lessonToUpdate);
         return lessonToUpdate;
+    }
+
+    @GetMapping("/find/{title}")
+    public Lesson searchByTitle(@PathVariable String title) {
+        return this.repository.findByTitle(title);
+    }
+
+    @GetMapping("/between")
+    public Iterable<Lesson> searchLessonsBetween(@RequestParam String date1, @RequestParam String date2) {
+        return this.repository.findLessonsBetween(date1,date2);
     }
 }
