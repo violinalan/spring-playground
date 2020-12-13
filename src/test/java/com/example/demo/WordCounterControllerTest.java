@@ -9,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
@@ -25,10 +26,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 //@WebMvcTest(WordCounterController.class)
 @SpringBootTest
+@TestPropertySource(properties = {
+        "word-count.caseSensitive=true",
+        "word-count.words.skip[0]=the-test",
+        "word-count.words.skip[1]=an-test",
+        "word-count.words.skip[2]=a-test",
+})
 public class WordCounterControllerTest {
 
     @Autowired
     WordCounter wordCounter;
+
+    @Autowired
+    private MyConfig config;
+
+    @Test
+    public void testPropertiesAreMappedCorrectly() {
+        assertEquals(true, config.isCaseSensitive());
+        assertEquals("the-test", config.getWords().getSkip().get(0));
+        assertEquals("an-test", config.getWords().getSkip().get(1));
+        assertEquals("a-test", config.getWords().getSkip().get(2));
+    }
 
 //    Comment IN following section for 3rd (MockBean) test
 
