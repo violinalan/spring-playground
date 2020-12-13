@@ -12,7 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -42,7 +44,14 @@ public class WordCounterControllerTest {
 
     @Test
     public void unitTestWordCounter() {
-        WordCounter wordCounter1 = new WordCounter();
+        MyConfig config = new MyConfig();
+        List<String> skip = Arrays.asList("the", "an", "a");
+        MyConfig.Words words = new MyConfig.Words();
+        words.setSkip(skip);
+        config.setWords(words);
+        config.setCaseSensitive(false);
+
+        WordCounter wordCounter1 = new WordCounter(config);
 
         assertEquals(2, wordCounter1.count("A brown cow jumps over a brown fox").get("brown"));
         assertEquals(1, wordCounter1.count("A brown cow jumps over a brown fox").get("cow"));

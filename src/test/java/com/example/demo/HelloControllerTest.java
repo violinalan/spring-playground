@@ -129,64 +129,64 @@ public class HelloControllerTest {
                 .andExpect(content().string("600"));
     }
 
-    ObjectMapper objectMapper = new ObjectMapper();
+    //ObjectMapper objectMapper = new ObjectMapper();
 
-    @Test
-    public void testFlightsTicketsTotalWithJackson() throws Exception {
-        HashMap<String, Object> person1 = new HashMap<>() {
-            {
-                put("FirstName", "Some name");
-                put("LastName", "Some other name");
-            }
-        };
-
-        HashMap<String, Object> ticket1 = new HashMap<>() {
-            {
-                put("Passenger", person1);
-                put("Price", 200);
-            }
-        };
-
-        HashMap<String, Object> flight1 = new HashMap<>() {
-            {
-                put("Departs", "2017-04-21 07:04");
-                put("Tickets", ticket1);
-            }
-        };
-
-        HashMap<String, Object> person2 = new HashMap<>() {
-            {
-                put("FirstName", "Some name");
-                put("LastName", "Some other name");
-            }
-        };
-
-        HashMap<String, Object> ticket2 = new HashMap<>() {
-            {
-                put("Passenger", person2);
-                put("Price", 400);
-            }
-        };
-
-        HashMap<String, Object> flight2 = new HashMap<>() {
-            {
-                put("Departs", "2017-04-21 07:04");
-                put("Tickets", ticket1);
-            }
-        };
-
-        List<HashMap> data = new ArrayList<HashMap>(Arrays.asList(flight1, flight2));
-
-        String json = objectMapper.writeValueAsString(data);
-
-        MockHttpServletRequestBuilder request = post("/flights/tickets/total")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(json);
-
-        this.mvc.perform(request)
-                .andExpect(status().isOk())
-                .andExpect(content().string("600"));
-    }
+//    @Test
+//    public void testFlightsTicketsTotalWithJackson() throws Exception {
+//        HashMap<String, Object> person1 = new HashMap<>() {
+//            {
+//                put("FirstName", "Some name");
+//                put("LastName", "Some other name");
+//            }
+//        };
+//
+//        HashMap<String, Object> ticket1 = new HashMap<>() {
+//            {
+//                put("Passenger", person1);
+//                put("Price", 200);
+//            }
+//        };
+//
+//        HashMap<String, Object> flight1 = new HashMap<>() {
+//            {
+//                put("Departs", "2017-04-21 07:04");
+//                put("Tickets", ticket1);
+//            }
+//        };
+//
+//        HashMap<String, Object> person2 = new HashMap<>() {
+//            {
+//                put("FirstName", "Some name");
+//                put("LastName", "Some other name");
+//            }
+//        };
+//
+//        HashMap<String, Object> ticket2 = new HashMap<>() {
+//            {
+//                put("Passenger", person2);
+//                put("Price", 400);
+//            }
+//        };
+//
+//        HashMap<String, Object> flight2 = new HashMap<>() {
+//            {
+//                put("Departs", "2017-04-21 07:04");
+//                put("Tickets", ticket1);
+//            }
+//        };
+//
+//        List<HashMap> data = new ArrayList<HashMap>(Arrays.asList(flight1, flight2));
+//
+//        String json = objectMapper.writeValueAsString(data);
+//
+//        MockHttpServletRequestBuilder request = post("/flights/tickets/total")
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .content(json);
+//
+//        this.mvc.perform(request)
+//                .andExpect(status().isOk())
+//                .andExpect(content().string("600"));
+//    }
 
     @Test
     public void testFlightsTicketsTotalFromFile() throws Exception {
